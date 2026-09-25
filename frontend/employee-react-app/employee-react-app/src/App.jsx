@@ -6,99 +6,99 @@ function App() {
 
   // Store all employees
   const [employees, setEmployees] = useState([]);
+
   const [employee, setEmployee] = useState({
-  fname: "",
-  lname: "",
-  age: "",
-  salary: "",
-  city: "",
-  state: ""
-});
+    fname: "",
+    lname: "",
+    age: "",
+    salary: "",
+    city: "",
+    state: ""
+  });
 
   // When page loads, get all employees
   useEffect(() => {
     getEmployees();
   }, []);
 
-  //create employeee
+  // Create Employee
   const createEmployee = async () => {
-  try {
+    try {
 
-    const response = await axios.post(
-      "http://localhost:9999/api/v1/createEmp",
-      employee
-    );
+      const response = await axios.post(
+        "https://employee-management-system-jcni.onrender.com/api/v1/createEmp",
+        employee
+      );
 
-    console.log(response.data);
+      console.log(response.data);
 
-    alert("Employee Created Successfully");
+      alert("Employee Created Successfully");
 
-    getEmployees();
+      getEmployees();
 
-  } catch (error) {
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    console.log(error);
+  // Update Employee
+  const updateEmployee = async (eid) => {
+    try {
 
-  }
-};
+      const response = await axios.put(
+        `https://employee-management-system-jcni.onrender.com/api/v1/update/${eid}`,
+        employee
+      );
 
+      console.log(response.data);
 
-//Update Employee
-const updateEmployee = async (eid) => {
-  try {
-    const response = await axios.put(
-      `http://localhost:9999/api/v1/update/${eid}`,
-      employee
-    );
+      alert("Employee Updated Successfully");
 
-    console.log(response.data);
+      getEmployees();
 
-    alert("Employee Updated Successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    getEmployees();
+  // Delete Employee
+  const deleteEmployee = async (eid) => {
+    try {
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+      await axios.delete(
+        `https://employee-management-system-jcni.onrender.com/api/v1/delete/${eid}`
+      );
 
-//delete employee
-const deleteEmployee = async (eid) => {
-  try {
-    await axios.delete(
-      `http://localhost:9999/api/v1/delete/${eid}`
-    );
+      alert("Employee Deleted Successfully");
 
-    alert("Employee Deleted Successfully");
+      getEmployees();
 
-    getEmployees();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+  // Search Employee
+  const searchEmployee = async (fname) => {
+    try {
 
+      const response = await axios.get(
+        `https://employee-management-system-jcni.onrender.com/api/v1/getEmp/fname/${fname}`
+      );
 
-//search found
-const searchEmployee = async (fname) => {
-  try {
-    const response = await axios.get(
-      `http://localhost:9999/api/v1/getEmp/fname/${fname}`
-    );
+      console.log(response.data);
 
-    console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-  // GET ALL EMPLOYEES
+  // Get All Employees
   const getEmployees = async () => {
     try {
 
       const response = await axios.get(
-        "http://localhost:9999/api/v1/getEmpList"
+        "https://employee-management-system-jcni.onrender.com/api/v1/getEmpList"
       );
 
       setEmployees(response.data);
@@ -110,12 +110,12 @@ const searchEmployee = async (fname) => {
     }
   };
 
-  // GET SINGLE EMPLOYEE
+  // Get Single Employee
   const getEmployee = async (eid) => {
     try {
 
       const response = await axios.get(
-        `http://localhost:9999/api/v1/getEmp/${eid}`
+        `https://employee-management-system-jcni.onrender.com/api/v1/getEmp/${eid}`
       );
 
       console.log(response.data);
@@ -134,89 +134,89 @@ const searchEmployee = async (fname) => {
 
       <h2>Add Employee</h2>
 
-<input
-  placeholder="First Name"
-  value={employee.fname}
-  onChange={(e) =>
-    setEmployee({
-      ...employee,
-      fname: e.target.value
-    })
-  }
-/>
+      <input
+        placeholder="First Name"
+        value={employee.fname}
+        onChange={(e) =>
+          setEmployee({
+            ...employee,
+            fname: e.target.value
+          })
+        }
+      />
 
-<br />
+      <br />
 
-<input
-  placeholder="Last Name"
-  value={employee.lname}
-  onChange={(e) =>
-    setEmployee({
-      ...employee,
-      lname: e.target.value
-    })
-  }
-/>
+      <input
+        placeholder="Last Name"
+        value={employee.lname}
+        onChange={(e) =>
+          setEmployee({
+            ...employee,
+            lname: e.target.value
+          })
+        }
+      />
 
-<br />
+      <br />
 
-<input
-  type="number"
-  placeholder="Age"
-  value={employee.age}
-  onChange={(e) =>
-    setEmployee({
-      ...employee,
-      age: e.target.value
-    })
-  }
-/>
+      <input
+        type="number"
+        placeholder="Age"
+        value={employee.age}
+        onChange={(e) =>
+          setEmployee({
+            ...employee,
+            age: e.target.value
+          })
+        }
+      />
 
-<br />
+      <br />
 
-<input
-  type="number"
-  placeholder="Salary"
-  value={employee.salary}
-  onChange={(e) =>
-    setEmployee({
-      ...employee,
-      salary: e.target.value
-    })
-  }
-/>
+      <input
+        type="number"
+        placeholder="Salary"
+        value={employee.salary}
+        onChange={(e) =>
+          setEmployee({
+            ...employee,
+            salary: e.target.value
+          })
+        }
+      />
 
-<br />
+      <br />
 
-<input
-  placeholder="City"
-  value={employee.city}
-  onChange={(e) =>
-    setEmployee({
-      ...employee,
-      city: e.target.value
-    })
-  }
-/>
+      <input
+        placeholder="City"
+        value={employee.city}
+        onChange={(e) =>
+          setEmployee({
+            ...employee,
+            city: e.target.value
+          })
+        }
+      />
 
-<br />
+      <br />
 
-<input
-  placeholder="State"
-  value={employee.state}
-  onChange={(e) =>
-    setEmployee({
-      ...employee,
-      state: e.target.value
-    })
-  }
-/>
+      <input
+        placeholder="State"
+        value={employee.state}
+        onChange={(e) =>
+          setEmployee({
+            ...employee,
+            state: e.target.value
+          })
+        }
+      />
 
-<br />
+      <br />
 
-<button onClick={createEmployee}>
-  Add Employee
-</button>
+      <button onClick={createEmployee}>
+        Add Employee
+      </button>
 
       <h2>Employee List</h2>
 
@@ -224,7 +224,6 @@ const searchEmployee = async (fname) => {
 
         <thead>
           <tr>
-
             <th>ID</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -233,7 +232,6 @@ const searchEmployee = async (fname) => {
             <th>City</th>
             <th>State</th>
             <th>Action</th>
-
           </tr>
         </thead>
 
@@ -243,12 +241,6 @@ const searchEmployee = async (fname) => {
 
             <tr key={employee.eid}>
 
-              <td>
-              <button onClick={() => deleteEmployee(employee.eid)}>
-               Delete
-              </button>
-              </td>
-
               <td>{employee.eid}</td>
               <td>{employee.fname}</td>
               <td>{employee.lname}</td>
@@ -256,6 +248,14 @@ const searchEmployee = async (fname) => {
               <td>{employee.salary}</td>
               <td>{employee.city}</td>
               <td>{employee.state}</td>
+
+              <td>
+                <button
+                  onClick={() => deleteEmployee(employee.eid)}
+                >
+                  Delete
+                </button>
+              </td>
 
             </tr>
 
